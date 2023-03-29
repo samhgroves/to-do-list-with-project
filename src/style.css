@@ -1,7 +1,39 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .active {
   color: blue;
 }
 
 h1 {
   text-align: center;
+  display: block;
+}
+
+.content {
+  display: flex;
+}
+
+.projects {
+  width: 20%;
+  float: left;
+}
+
+.tasks {
+  margin: 0 auto;
+  width: 60%;
+}
+
+#project-list,
+#to-do-list {
+  border: 1px solid black;
+  height: 300px;
+  overflow-y: auto;
+  padding: 10px;
+  text-decoration: dashed;
+}
+
+.done {
+  text-decoration: line-through;
 }

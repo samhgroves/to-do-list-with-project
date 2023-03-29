@@ -1,7 +1,7 @@
 import "./style.css";
 
 const projectsArr = [];
-let activeProject = null;
+
 function findActiveProject() {
   for (let i = 0; i < projectsArr.length; i++) {
     if (projectsArr[i].active === true) {
@@ -29,6 +29,8 @@ function projectFactory(name) {
 //Add general project as default
 const general = projectFactory("general");
 general.addToProjects();
+general.active = true;
+let activeProject = general;
 displayProjects(projectsArr);
 
 function displayProjects(array) {
@@ -37,6 +39,9 @@ function displayProjects(array) {
   while (projectList.firstChild) {
     projectList.removeChild(projectList.lastChild);
   }
+
+  let activeFound = false;
+
   array.forEach((element) => {
     let projectDiv = document.createElement("div");
     projectDiv.textContent = element.name;
@@ -56,6 +61,24 @@ function displayProjects(array) {
         findActiveProject();
       });
     });
+
+    let deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "X";
+    projectDiv.appendChild(deleteBtn);
+    deleteBtn.addEventListener("click", function () {
+      let index = array.indexOf(element); // Get the index of the element
+      if (index !== -1) {
+        array.splice(index, 1); // Remove the element from the array
+      }
+      projectList.removeChild(projectDiv);
+    });
+
+    if (!activeFound) {
+      // Add "active" class to the first projectDiv if none are active
+      projectDiv.classList.add("active");
+      activeFound = true;
+    }
+
     projectList.appendChild(projectDiv);
   });
 }
@@ -101,5 +124,27 @@ function displayToDos(project) {
     let toDo = document.createElement("div");
     toDo.textContent = element.task;
     toDoContainer.appendChild(toDo);
+
+    let doneBtn = document.createElement("button");
+    doneBtn.textContent = "Done";
+    doneBtn.addEventListener("click", function () {
+      toDo.classList.toggle("done");
+      element.done = !element.done;
+    });
+
+    let deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.addEventListener("click", function () {
+      let index = toDoArr.indexOf(element); // Get the index of the element
+      if (index !== -1) {
+        toDoArr.splice(index, 1); // Remove the element from the array
+      }
+      toDoContainer.removeChild(toDo);
+    });
+    if (element.done) {
+      toDo.classList.add("active");
+    }
+    toDo.appendChild(doneBtn);
+    toDo.appendChild(deleteBtn);
   });
 }
