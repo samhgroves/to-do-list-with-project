@@ -1,7 +1,28 @@
 import "./style.css";
 
 const projectsArr = [];
+loadProjects();
 
+function saveProjects() {
+  localStorage.setItem("projects", JSON.stringify(projectsArr));
+}
+function loadProjects() {
+  const savedProjects = JSON.parse(localStorage.getItem("projects"));
+  if (savedProjects !== null) {
+    projectsArr.splice(0, projectsArr.length, ...savedProjects);
+    // Re-create the project objects' methods
+    projectsArr.forEach((project) => {
+      project.addToProjects = function () {
+        projectsArr.push(this);
+        saveProjects();
+      };
+      project.addToDo = function (toDo) {
+        this.toDoList.push(toDo);
+        saveProjects();
+      };
+    });
+  }
+}
 function findActiveProject() {
   for (let i = 0; i < projectsArr.length; i++) {
     if (projectsArr[i].active === true) {
@@ -26,12 +47,27 @@ function projectFactory(name) {
   return project;
 }
 
-//Add general project as default
-const general = projectFactory("general");
-general.addToProjects();
-general.active = true;
-let activeProject = general;
+if (localStorage.getItem("projectsArr")) {
+  projectsArr = JSON.parse(localStorage.getItem("projectsArr"));
+}
+
+// If there are no projects stored, create the default "general" project
+if (projectsArr.length === 0) {
+  const general = projectFactory("general");
+  general.addToProjects();
+}
+
+// Set the active project
+let activeProject;
+if (localStorage.getItem("activeProjectIndex")) {
+  activeProject = projectsArr[localStorage.getItem("activeProjectIndex")];
+} else {
+  activeProject = projectsArr[0];
+}
+
+// Display projects and todos
 displayProjects(projectsArr);
+displayToDos(activeProject);
 
 function displayProjects(array) {
   let projectList = document.getElementById("project-list");
@@ -71,6 +107,7 @@ function displayProjects(array) {
         array.splice(index, 1); // Remove the element from the array
       }
       projectList.removeChild(projectDiv);
+      saveProjects();
     });
 
     if (!activeFound) {
@@ -90,6 +127,7 @@ newProjectBtn.addEventListener("click", function () {
   newProject.addToProjects();
   displayProjects(projectsArr);
   projectInput.value = "";
+  saveProjects();
 });
 
 const toDoInput = document.getElementById("to-do-input");
@@ -99,6 +137,7 @@ newToDoBtn.addEventListener("click", function () {
   activeProject.addToDo(newToDo);
   displayToDos(activeProject);
   toDoInput.value = "";
+  saveProjects();
 });
 
 function toDoFactory(task) {
@@ -110,8 +149,7 @@ function toDoFactory(task) {
 }
 
 const makeDinner = toDoFactory("make dinner");
-general.addToDo(makeDinner);
-displayToDos(general);
+
 function displayToDos(project) {
   let toDoContainer = document.getElementById("to-do-list");
   let toDoArr = project.toDoList;
@@ -130,6 +168,7 @@ function displayToDos(project) {
     doneBtn.addEventListener("click", function () {
       toDo.classList.toggle("done");
       element.done = !element.done;
+      saveProjects();
     });
 
     let deleteBtn = document.createElement("button");
@@ -140,6 +179,7 @@ function displayToDos(project) {
         toDoArr.splice(index, 1); // Remove the element from the array
       }
       toDoContainer.removeChild(toDo);
+      saveProjects();
     });
     if (element.done) {
       toDo.classList.add("done");
