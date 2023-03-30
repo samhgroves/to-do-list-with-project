@@ -142,7 +142,7 @@ function displayToDos(project) {
       toDoContainer.removeChild(toDo);
     });
     if (element.done) {
-      toDo.classList.add("active");
+      toDo.classList.add("done");
     }
     toDo.appendChild(doneBtn);
     toDo.appendChild(deleteBtn);
