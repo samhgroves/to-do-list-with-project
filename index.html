@@ -3,20 +3,28 @@
   <head>
     <meta charset="utf-8" />
     <title>To Do List</title>
+    <script
+      src="https://kit.fontawesome.com/28f244bc2a.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <h1>To Do List</h1>
     <div class="content">
       <div class="projects">
         <h2>Projects</h2>
-        <input id="project-input" type="text" />
-        <button id="add-project">Add Project</button>
+        <input id="project-input" type="text" placeholder="project" />
+        <button id="add-project">
+          <i class="fa-solid fa-plus"></i> new project
+        </button>
         <div id="project-list"></div>
       </div>
       <div class="tasks">
         <h2>Tasks</h2>
-        <input id="to-do-input" type="text" />
-        <button id="add-to-do">Add To-Do</button>
+        <input id="to-do-input" type="text" placeholder="to do" />
+        <button id="add-to-do">
+          <i class="fa-solid fa-plus"></i> add to do
+        </button>
         <div id="to-do-list"></div>
       </div>
     </div>
