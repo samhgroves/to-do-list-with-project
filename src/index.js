@@ -99,7 +99,8 @@ function displayProjects(array) {
     });
 
     let deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "X";
+    deleteBtn.innerHTML = '<i class="fa-solid fa-x"></i>';
+    deleteBtn.classList.add("delete-button");
     projectDiv.appendChild(deleteBtn);
     deleteBtn.addEventListener("click", function () {
       let index = array.indexOf(element); // Get the index of the element
