@@ -165,7 +165,8 @@ function displayToDos(project) {
     toDoContainer.appendChild(toDo);
 
     let doneBtn = document.createElement("button");
-    doneBtn.textContent = "Done";
+    doneBtn.innerHTML =
+      '<i class="fa-solid fa-check" style="color: #06D6A0;"></i>';
     doneBtn.addEventListener("click", function () {
       toDo.classList.toggle("done");
       element.done = !element.done;
@@ -173,7 +174,8 @@ function displayToDos(project) {
     });
 
     let deleteBtn = document.createElement("button");
-    deleteBtn.textContent = "Delete";
+    deleteBtn.innerHTML =
+      '<i class="fa-solid fa-x" style="color: #EF476F;"></i>';
     deleteBtn.addEventListener("click", function () {
       let index = toDoArr.indexOf(element); // Get the index of the element
       if (index !== -1) {

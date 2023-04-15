@@ -23,6 +23,7 @@ input {
 ::placeholder {
   color: black;
   opacity: 0.5;
+  font-size: 15px;
 }
 
 ::-ms-input-placeholder {
@@ -31,25 +32,27 @@ input {
 }
 
 .content {
-  width: 100vw;
+  min-width: 800px; /* Set a minimum width to prevent the content from becoming too small */
+  width: 100%;
   height: 100vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
+  flex-wrap: wrap; /* Allow the child divs to wrap onto multiple lines */
 }
 
 .projects {
-  width: 30vw;
+  flex: 1 0 20%; /* Use flexbox to set the width of the projects div to 30% of the available space */
   padding-left: 2rem;
-  margin-left: -8rem;
-  border: 1px solid black;
+  border: none;
+  border-radius: 20px;
   height: 100%;
   background-color: #118ab2;
   color: #073b4c;
 }
 
 .tasks {
-  width: 50vw;
+  flex: 1 0 50%; /* Use flexbox to set the width of the tasks div to 50% of the available space */
   height: 100%;
   border-radius: 10px;
   margin: 1rem;
@@ -72,10 +75,18 @@ input {
 }
 
 button {
-  border: 2px solid black;
+  border: none;
   border-radius: 10px;
   background-color: #118ab2;
   height: 2.5rem;
+  font-size: 16px;
+}
+#add-project {
+  background-color: #073b4c;
+  color: white;
+}
+button:hover {
+  background-color: #073b4c;
 }
 
 #project-list > div {
@@ -85,7 +96,10 @@ button {
 
 #to-do-list > div > button {
   height: 2rem;
-  margin-left: 10px;
+  margin-left: 8px;
+  margin-right: -3px;
+  background-color: #073b4c;
+  border: none;
 }
 
 #to-do-list > div {
@@ -94,8 +108,8 @@ button {
 }
 
 .delete-button {
-  background-color: #ef476f;
-  border: 2px solid black;
+  background-color: #118ab2;
+  border: none;
   height: 1.5rem;
   margin-left: 10px;
 }
